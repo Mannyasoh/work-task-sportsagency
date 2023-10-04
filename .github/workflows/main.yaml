@@ -7,26 +7,26 @@ on:
 
 jobs:
   deploy:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
 
-    - name: Install dependencies
-      run: |
-        cd lavarel-app
-        composer Install
-        cd ../angular-app
-        npm Install
-        ng build --prod
+      - name: Install dependencies
+        run: |
+          cd lavarel-app
+          composer Install
+          cd ../angular-app
+          npm Install
+          ng build --prod
 
-    - name: Deploy to DigitalOcean
-      run: |
-        ssh-keyscan -H 165.232.131.55 >> ~/.ssh/known_hosts
-        ssh root@165.232.131.55 "cd /var/www/laravel-realworld-example-app && git pull task main"
+      - name: Deploy to DigitalOcean
+        run: |
+          ssh-keyscan -H 165.232.131.55 >> ~/.ssh/known_hosts
+          ssh root@165.232.131.55 "cd /var/www/laravel-realworld-example-app && git pull task main"
